@@ -1,0 +1,25 @@
+#include <iostream>
+#include <fstream>
+#include <Windows.h>
+
+int main() {
+    // Отслеживание использования CPU
+    SYSTEM_INFO sysInfo;
+    GetSystemInfo(&sysInfo);
+    std::cout << "Number of processor cores: " << sysInfo.dwNumberOfProcessors << std::endl;
+
+    // Отслеживание использования памяти
+    MEMORYSTATUSEX memInfo;
+    memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+    GlobalMemoryStatusEx(&memInfo);
+    std::cout << "Total physical memory: " << memInfo.ullTotalPhys / 1024 / 1024 << " MB" << std::endl;
+    std::cout << "Available physical memory: " << memInfo.ullAvailPhys / 1024 / 1024 << " MB" << std::endl;
+
+    // Отслеживание использования дискового пространства
+    ULARGE_INTEGER total, free, available;
+    GetDiskFreeSpaceEx(NULL, &available, &total, &free);
+    std::cout << "Total disk space: " << total.QuadPart / 1024 / 1024 / 1024 << " GB" << std::endl;
+    std::cout << "Free disk space: " << free.QuadPart / 1024 / 1024 / 1024 << " GB" << std::endl;
+
+    return 0;
+}
