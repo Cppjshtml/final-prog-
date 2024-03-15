@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style type="text/css"></style>
+</head>
+<body>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create a New File</title>
+ <style>
+   body {
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+background-color: #f0f0f0;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+
+#file-widget {
+background-color: #f9f9f9;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+text-align: center;
+animation: fadeIn 0.5s ease-in-out;
+}
+
+button {
+margin: 10px;
+padding: 10px 20px;
+background-color: #000;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+button:hover {
+background-color: #333;
+}
+
+#output {
+margin-top: 20px;
+padding: 20px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+}
+
+to {
+opacity: 1;
+}
+}
+</style>
+<div id="file-widget">
+	<h2>Create a New File</h2>
+	<input type="text" id="foldername" placeholder="Folder Name"><br><br>
+	<input type="text" id="filename" placeholder="File Name"><br><br>
+	<textarea id="filetext" placeholder="Text Information"></textarea><br><br>
+	<button onclick="createFile()">Create File</button>
+</div>
+<div id="output"></div>
+<script>
+
+		let filesInfo = [];
+		
+		function createFile() {
+		let foldername = document.getElementById("foldername").value;
+		let filename = document.getElementById("filename").value;
+		let text = document.getElementById("filetext").value;
+		
+		if (foldername && filename && text) {
+		let fileInfo = {
+		name: filename,
+		text: text,
+		creationTime: new Date().toLocaleString()
+		};
+		
+		filesInfo.push(fileInfo);
+		document.getElementById("output").innerText = "File created successfully";
+		
+		// Create a download link for the file
+		let downloadLink = document.createElement('a');
+		downloadLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(text);
+		downloadLink.download = filename + '.txt';
+		downloadLink.innerHTML = 'Download File';
+		document.getElementById("output").appendChild(downloadLink);
+		} else {
+		alert("Please enter valid folder name, file name, and text information.");
+		}
+		}
+</script>
+<script type="text/javascript"></script>
+</body>
+</html>
