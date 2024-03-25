@@ -1,168 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-<head<meta charset="UTF8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>File Manager</title>
-<style>
-    body {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-     
-    #menu {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        animation: fadeIn 0.5s ease-in-out;
-    }
-
-    button {
-        margin: 10px;
-        padding: 10px 20px;
-        background-color: #000;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button:hover {
-        background-color: #333;
-    }
-
-    #output {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease-in-out;
-    }
-
-    #drop_zone {
-        border: 2px dashed #000;
-        padding: 20px;
-        text-align: center;
-        margin-top: 20px;
-        border-radius: 10px;
-        background-color: #fff;
-    }
-	#logo {
-	width: 100px; 
-	height: 100px;
-	}
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-</style>
-</head>
+<head></head>
 <body>
-<div id="menu">
-    <img id="logo" src="https://avatars.mds.yandex.net/i?id=0bda4a50cc7932caa6c93f7ae44355ba86a68ebd-3788438-images-thumbs&n=13" alt="File Manager">
-    <h2>Welcome to our File Manager</h2>
-    <button onclick="createFile()">Create a New File</button>
-    <button onclick="showFileInfo()">View Files</button>
-    <button onclick="exitApp()">Exit</button>
-</div>
-<div id="output"></div>
-<div id="drop_zone">Drop files here</div>
-<script>
-    let filesInfo = [];
 
-function createFile() {
-let foldername = prompt("Enter the folder name:");
-let filename = prompt("Enter the file name:");
-let text = prompt("Enter the text information to write to the file:");
+	<meta charset="UTF8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>File Manager</title>
+	<style>
+		body {
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			background-color: #f0f0f0;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
 
-if (foldername && filename && text) {
-let fileInfo = {
-name: filename,
-text: text,
-creationTime: new Date().toLocaleString()
-};
+		#menu {
+			background-color: #f9f9f9;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			animation: fadeIn 0.5s ease-in-out;
+		}
 
-let blob = new Blob([text], { type: 'text/plain' });
-let url = URL.createObjectURL(blob);
-let link = document.createElement('a');
-link.href = url;
-link.download = `${filename}.txt`;
+		button {
+			margin: 10px;
+			padding: 10px 20px;
+			background-color: #000;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
 
-link.setAttribute('target', '_blank');
+		button:hover {
+			background-color: #333;
+		}
 
-document.body.appendChild(link);
-link.click();
-URL.revokeObjectURL(url);
+		#output {
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 10px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			animation: fadeIn 0.5s ease-in-out;
+		}
 
-filesInfo.push(fileInfo);
-document.getElementById("output").innerText = "Text added to the file successfully";
-} else {
-alert("Please enter valid folder name, file name, and text information.");
-}
-}
-    function showFileInfo() {
-        let output = "Information about the created files:\n";
-        filesInfo.forEach(fileInfo => {
-            output += `File name: ${fileInfo.name}\n`;
-            output += `Creation time: ${fileInfo.creationTime}\n`;
-            output += `Text information:\n${fileInfo.text}\n\n`;
-        });
-        document.getElementById("output").innerText = output;
-    }
+		#drop_zone {
+			border: 2px dashed #000;
+			padding: 20px;
+			text-align: center;
+			margin-top: 20px;
+			border-radius: 10px;
+			background-color: #fff;
+		}
 
-    function exitApp() {
-        alert("Exiting the application");
-        filesInfo = [];
-        document.getElementById("output").innerText = "";
-    }
+		#logo {
+			width: 100px;
+			height: 100px;
+		}
 
-    let dropZone = document.getElementById('drop_zone');
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
 
-    dropZone.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        dropZone.style.backgroundColor = '#f0f0f0';
-    });
+			to {
+				opacity: 1;
+			}
+		}
+	</style>
 
-    dropZone.addEventListener('dragenter', function(e) {
-        e.preventDefault();
-        dropZone.style.border = '2px dashed #000';
-    });
 
-    dropZone.addEventListener('dragleave', function(e) {
-        e.preventDefault();
-        dropZone.style.border = 'none';
-    });
+	<div id="menu">
+		<img id="logo" src="https://avatars.mds.yandex.net/i?id=0bda4a50cc7932caa6c93f7ae44355ba86a68ebd-3788438-images-thumbs&amp;n=13" alt="File Manager">
+		<h2>Welcome to our File Manager</h2>
+		<button onclick="createFile()">Create a New File</button>
+		<button onclick="showFileInfo()">View Files</button>
+		<button onclick="exitApp()">Exit</button>
+		<button onclick="shareFile()">Share File</button>
+	</div>
+	<div id="output">Information about the created
+		files:<br>File name: k.txt<br>Creation time: 25.03.2024, 17:18:34<br>Text information:<br>k<br><br>File name: j.txt,.pdf,.doc<br>Creation time: 25.03.2024, 17:18:45<br>Text information:<br>j<br><br></div>
+		<div id="drop_zone" style="border: none; background-color: rgb(255, 255, 255);">Drop files here</div>
+		<script>
+			let filesInfo = [];
 
-    dropZone.addEventListener('drop', function(e) {
-        e.preventDefault();
-        dropZone.style.border = 'none';
-        dropZone.style.backgroundColor = '#fff';
+        function createFile() {
+            let foldername = prompt("Enter the folder name:");
+            let filename = prompt("Enter the file name:");
+            let text = prompt("Enter the text information to write to the file:");
 
-        let files = e.dataTransfer.files;
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i];
-            let reader = new FileReader();
-            reader.onload = function(e) {
+            if (foldername && filename && text) {
                 let fileInfo = {
-                    name: file.name,
-                    text: e.target.result,
+                    name: filename,
+                    text: text,
                     creationTime: new Date().toLocaleString()
                 };
+
+                let blob = new Blob([text], { type: 'text/plain' });
+                let url = URL.createObjectURL(blob);
+                let link = document.createElement('a');
+                link.href = url;
+                link.download = `${filename}.txt`;
+
+                link.setAttribute('target', '_blank');
+
+                document.body.appendChild(link);
+                link.click();
+                URL.revokeObjectURL(url);
+
                 filesInfo.push(fileInfo);
-                document.getElementById("output").innerText = "File added successfully";
-            };
-            reader.readAsText(file);
+                document.getElementById("output").innerText = "Text added to the file successfully";
+            } else {
+                alert("Please enter valid folder name, file name, and text information.");
+            }
         }
-    });
+
+        function showFileInfo() {
+            let output = "Information about the created files:\n";
+            filesInfo.forEach(fileInfo => {
+                output += `File name: ${fileInfo.name}\n`;
+                output += `Creation time: ${fileInfo.creationTime}\n`;
+                output += `Text information:\n${fileInfo.text}\n\n`;
+            });
+            document.getElementById("output").innerText = output;
+        }
+
+        function exitApp() {
+            alert("Exiting the application");
+            filesInfo = [];
+            document.getElementById("output").innerText = "";
+        }
+
+        let dropZone = document.getElementById('drop_zone');
+
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '#f0f0f0';
+        });
+
+        dropZone.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            dropZone.style.border = '2px dashed #000';
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropZone.style.border = 'none';
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropZone.style.border = 'none';
+            dropZone.style.backgroundColor = '#fff';
+
+            let files = e.dataTransfer.files;
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let fileInfo = {
+                        name: file.name,
+                        text: e.target.result,
+                        creationTime: new Date().toLocaleString()
+                    };
+                    filesInfo.push(fileInfo);
+                    document.getElementById("output").innerText = "File added successfully";
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function shareFile() {
+            if (filesInfo.length > 0) {
+                let latestFile = filesInfo[filesInfo.length - 1];
+                let blob = new Blob([latestFile.text], { type: 'text/plain' });
+                let url = URL.createObjectURL(blob);
+
+                let shareLink = document.createElement('a');
+                shareLink.href = url;
+                shareLink.setAttribute('target', '_blank');
+                shareLink.innerText = 'Download the shared file';
+
+                document.getElementById("output").appendChild(shareLink);
+            } else {
+                alert("No files available to share.");
+            }
+        }
 </script>
 </body>
 </html>
